@@ -3,16 +3,13 @@ const router=express.Router()
 const members=require("../Datapool/members..datapool")
 const uuid=require('uuid')
 const jwttoken=require('jsonwebtoken')
-const secretKey=require('../secret')
 const tokenValidate=require('../middlewares/tokenvalidator.middleware')
+require("dotenv/config")
 
 router.get("/members",(req,res)=>{
-
-    
+  
     res.render('index',({members:members}))
 
-
-    
 })
 router.get("/members/:id",(req,res)=>{
 
@@ -72,7 +69,7 @@ router.put("/members/:id",(req,res)=>{
      if(req.body.email && req.body.password){
         members.forEach(member=>{
             if(member.email===req.body.email || req.body.name){
-                var token=jwttoken.sign({"name":req.body.email},secretKey)
+                var token=jwttoken.sign({"name":req.body.email},process.env.MY_SECRET)
                 res.json(token)
             }
         })

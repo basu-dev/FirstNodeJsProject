@@ -1,12 +1,17 @@
 const jwttoken=require('jsonwebtoken')
-const secretKey=require("../secret")
-function tokenValidators(token){
+const tokenValidators=(req,res,next)=>{
    try{
-      console.log(jwttoken.verify(token,secretKey))
-      return true
+      let tokenparams=jwttoken.verify(req.headers.authorization,process.env.MY_SECRET)
+      next()
+   //    if(tokenparams.userName==='basu'){
+   //       next()
+   //    }
+   //   else{
+   //      res.json("Unauthorized as basu")
+   //   }
     }
    catch(e){
-       return false
+       return res.json("Unauthorized")
    }
 }
 
