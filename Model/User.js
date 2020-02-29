@@ -3,7 +3,8 @@ const mongoose =require('mongoose')
 const user=new mongoose.Schema({
     firstName:{
         type:String,
-        required:false
+        required:false,
+    
     },
     lastName:{
         type:String,

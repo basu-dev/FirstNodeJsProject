@@ -8,8 +8,6 @@ const options={
 const connecDB = async()=>{
   await mongoose.connect(DBURI,options)
   console.log("Database connected")
-  
- 
 }
 
 module.exports=connecDB

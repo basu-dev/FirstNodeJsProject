@@ -1,7 +1,8 @@
 const mongoose=require('mongoose')
-const User=require("./User")
+
+
 const Post=mongoose.Schema({
-    titie:{
+    title:{
         type:String,
         require:true
     },
@@ -9,10 +10,9 @@ const Post=mongoose.Schema({
         type:String,
         require:true
     },
-    user:{
-        type:User,
-        require:true
-    }
+    user: {type: mongoose.Schema.Types.ObjectId, ref: "user"},
+    readers:[{type:mongoose.Schema.Types.ObjectId,ref:"user"}]
+
 })
 
 module.exports=Posts=mongoose.model('posts',Post)

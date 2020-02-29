@@ -1,5 +1,6 @@
 const jwttoken = require("jsonwebtoken");
 const User = require("../Model/User");
+const bcrypt=require('bcrypt')
 function createToken (user)  {
     let payload = {
       firstName: user.firstName,
@@ -21,7 +22,7 @@ module.exports = {
     user.firstName = firstName;
     user.lastName = lastName;
     user.email = email;
-    user.password = password;
+    user.password = await bcrypt.hash(password,10);
     user.userName = userName;
     let userModel = new User(user);
     userModel
@@ -43,8 +44,23 @@ module.exports = {
           if (!user) {
             return res.json("Username Or Password Error");
           } else {
-            var token = createToken(user);
-            return res.json(token);
+            bcrypt.compare(req.body.password,user.password).then(
+            result=>{
+                if(result){
+                var token = createToken(user);
+                    return res.json(token);
+                }
+                else{
+                    return res.json("Username or Password Error")
+                }
+            }
+
+          ).catch(
+              err=>res.json(err)
+          );
+              
+            
+            
           }
         })
         .catch(err => {
@@ -95,4 +111,3 @@ module.exports = {
   }
 };
 
-// module.exports = router;
