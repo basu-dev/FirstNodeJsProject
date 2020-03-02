@@ -1,5 +1,6 @@
+require('dotenv/config')
 const mongoose=require('mongoose')
-const DBURI="mongodb+srv://basudev:dbUser@cluster0-htenl.mongodb.net/test?retryWrites=true&w=majority"
+const DBURI=process.env.CONNECTION_STRING
 const options={
     dbName:"TestProject",
   useUnifiedTopology:true,
@@ -9,5 +10,6 @@ const connecDB = async()=>{
   await mongoose.connect(DBURI,options)
   console.log("Database connected")
 }
+
 
 module.exports=connecDB

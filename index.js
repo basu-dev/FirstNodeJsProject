@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 //setHandlebars..........................................................................................//
 app.set("view engine", "handlebars");
-app.use(express.static(__dirname + "/static"));
+app.use("/static",express.static(__dirname + "/static"));
 //UsingBootstrap..................................................................................................//
 app.use(
   "/bootstrap",
@@ -27,7 +27,6 @@ app.engine(
 );
 
 //Routes......................................................................................................//
-app.use("/api", require("./middlewares/tokenvalidator.middleware"));
 app.use("/account", require("./middlewares/tokenvalidator.middleware"));
 app.use("/api", require("./controllers/member.controller")),
   app.use("/account", require("./routes/account.route"));
